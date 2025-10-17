@@ -3,6 +3,7 @@ import Foundation
 public struct LogFilter: Sendable, Equatable {
     public var startDate: Date?
     public var endDate: Date?
+    /// Levels that the log entry must match; supply an empty array to include all levels.
     public var levels: [LogLevel]
     public var subsystem: String?
     public var category: String?

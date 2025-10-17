@@ -39,6 +39,18 @@ To keep the raw files without compression, pass `zip: false`:
 try await extractor.export(matching: filter, to: logsDirectory, format: .json, zip: false)
 ```
 
+### Filtering by Log Level
+
+`LogFilter` accepts a `levels` array so you can include multiple log levels in a single run. Provide the levels you care about; leave the array empty to include every level.
+
+```swift
+// Capture only error and fault entries.
+let strictFilter = LogFilter(levels: [.error, .fault])
+
+// Capture all entries regardless of level.
+let everythingFilter = LogFilter()
+```
+
 ## macOS Example
 
 ```swift

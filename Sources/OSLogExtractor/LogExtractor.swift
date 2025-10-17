@@ -71,7 +71,7 @@ public final class LogExtractor: @unchecked Sendable {
                         @unknown default: mappedLevel = .info
                         }
 
-                        if let required = filter.level, required != mappedLevel { continue }
+                        if !filter.levels.isEmpty && !filter.levels.contains(mappedLevel) { continue }
 
                         continuation.yield(
                             LogEntry(

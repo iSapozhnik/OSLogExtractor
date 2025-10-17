@@ -166,7 +166,7 @@ struct MetadataCollector {
         let filter = LogMetadata.LoggingScope.Filter(
             startDate: context.filter.startDate,
             endDate: context.filter.endDate,
-            level: context.filter.level,
+            levels: context.filter.levels,
             subsystem: context.filter.subsystem,
             category: context.filter.category,
             process: context.filter.process,

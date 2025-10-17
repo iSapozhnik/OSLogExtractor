@@ -22,8 +22,8 @@ func exportRecentLogs() async throws {
     let extractor = try LogExtractor()
     let filter = LogFilter(
         startDate: Date().addingTimeInterval(-3600),
-        subsystem: "app.speakthis",
-        level: .info
+        levels: [.info],
+        subsystem: "app.speakthis"
     )
 
     let logsDirectory = FileManager.default.temporaryDirectory
@@ -39,6 +39,18 @@ To keep the raw files without compression, pass `zip: false`:
 try await extractor.export(matching: filter, to: logsDirectory, format: .json, zip: false)
 ```
 
+### Filtering by Log Level
+
+`LogFilter` accepts a `levels` array so you can include multiple log levels in a single run. Provide the levels you care about; leave the array empty to include every level.
+
+```swift
+// Capture only error and fault entries.
+let strictFilter = LogFilter(levels: [.error, .fault])
+
+// Capture all entries regardless of level.
+let everythingFilter = LogFilter()
+```
+
 ## macOS Example
 
 ```swift
@@ -48,7 +60,7 @@ import UniformTypeIdentifiers
 
 @available(macOS 12.0, *)
 func exportWithSavePanel() {
-    let panel = NSSavePanel()
+    let panel = NSOpenPanel()
     panel.canCreateDirectories = true
     panel.canChooseDirectories = true
     panel.canChooseFiles = false
@@ -63,8 +75,8 @@ func exportWithSavePanel() {
                 let extractor = try LogExtractor()
                 let filter = LogFilter(
                     startDate: Date().addingTimeInterval(-3600),
-                    subsystem: "<subsystem>",
-                    level: .info
+                    levels: [.info],
+                    subsystem: "<subsystem>"
                 )
                 try await extractor.export(matching: filter, to: directoryURL, format: .json)
             } catch {
@@ -98,8 +110,8 @@ final class LogExportController: NSObject, UIDocumentPickerDelegate {
                 let extractor = try LogExtractor()
                 let filter = LogFilter(
                     startDate: Date().addingTimeInterval(-3600),
-                    subsystem: "<subsystem>",
-                    level: .info
+                    levels: [.info],
+                    subsystem: "<subsystem>"
                 )
                 try await extractor.export(matching: filter, to: directoryURL, format: .text, zip: false)
                 // Produces logs-YYYYMMdd-HHmmss.log and logs-YYYYMMdd-HHmmss.metadata.json.

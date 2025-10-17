@@ -22,8 +22,8 @@ func exportRecentLogs() async throws {
     let extractor = try LogExtractor()
     let filter = LogFilter(
         startDate: Date().addingTimeInterval(-3600),
-        subsystem: "app.speakthis",
-        level: .info
+        levels: [.info],
+        subsystem: "app.speakthis"
     )
 
     let logsDirectory = FileManager.default.temporaryDirectory
@@ -48,7 +48,7 @@ import UniformTypeIdentifiers
 
 @available(macOS 12.0, *)
 func exportWithSavePanel() {
-    let panel = NSSavePanel()
+    let panel = NSOpenPanel()
     panel.canCreateDirectories = true
     panel.canChooseDirectories = true
     panel.canChooseFiles = false
@@ -63,8 +63,8 @@ func exportWithSavePanel() {
                 let extractor = try LogExtractor()
                 let filter = LogFilter(
                     startDate: Date().addingTimeInterval(-3600),
-                    subsystem: "<subsystem>",
-                    level: .info
+                    levels: [.info],
+                    subsystem: "<subsystem>"
                 )
                 try await extractor.export(matching: filter, to: directoryURL, format: .json)
             } catch {
@@ -98,8 +98,8 @@ final class LogExportController: NSObject, UIDocumentPickerDelegate {
                 let extractor = try LogExtractor()
                 let filter = LogFilter(
                     startDate: Date().addingTimeInterval(-3600),
-                    subsystem: "<subsystem>",
-                    level: .info
+                    levels: [.info],
+                    subsystem: "<subsystem>"
                 )
                 try await extractor.export(matching: filter, to: directoryURL, format: .text, zip: false)
                 // Produces logs-YYYYMMdd-HHmmss.log and logs-YYYYMMdd-HHmmss.metadata.json.

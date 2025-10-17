@@ -61,11 +61,29 @@ public struct LogMetadata: Codable, Sendable {
         public struct Filter: Codable, Sendable {
             public let startDate: Date?
             public let endDate: Date?
-            public let level: LogLevel?
+            public let levels: [LogLevel]
             public let subsystem: String?
             public let category: String?
             public let process: String?
             public let contains: String?
+
+            public init(
+                startDate: Date?,
+                endDate: Date?,
+                levels: [LogLevel],
+                subsystem: String?,
+                category: String?,
+                process: String?,
+                contains: String?
+            ) {
+                self.startDate = startDate
+                self.endDate = endDate
+                self.levels = levels
+                self.subsystem = subsystem
+                self.category = category
+                self.process = process
+                self.contains = contains
+            }
         }
 
         public let restrictToCurrentProcess: Bool

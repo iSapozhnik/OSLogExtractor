@@ -3,7 +3,7 @@ import Foundation
 public struct LogFilter: Sendable, Equatable {
     public var startDate: Date?
     public var endDate: Date?
-    public var level: LogLevel?
+    public var levels: [LogLevel]
     public var subsystem: String?
     public var category: String?
     public var process: String?
@@ -12,7 +12,7 @@ public struct LogFilter: Sendable, Equatable {
     public init(
         startDate: Date? = nil,
         endDate: Date? = nil,
-        level: LogLevel? = nil,
+        levels: [LogLevel] = [],
         subsystem: String? = nil,
         category: String? = nil,
         process: String? = nil,
@@ -20,7 +20,7 @@ public struct LogFilter: Sendable, Equatable {
     ) {
         self.startDate = startDate
         self.endDate = endDate
-        self.level = level
+        self.levels = levels
         self.subsystem = subsystem
         self.category = category
         self.process = process
